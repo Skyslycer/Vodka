@@ -13,7 +13,7 @@ public class Vodka {
     }
 
     /**
-     * Init the {@link VodkaHandler}. <b>ONLY call this in your {@code JavaPlugin#onEnable()} or later!<b/>
+     * Init the {@link VodkaHandler}. <b>ONLY call this in your {@code JavaPlugin#onEnable()} or later!
      *
      * @return The newly created {@link VodkaHandler}
      */

@@ -149,7 +149,7 @@ public class Page {
          * @return The built {@link Page}
          */
         public Page build() {
-            for (var i = 0; i < size.bukkitSlot; i++) {
+            for (var i = 0; i < size.slots - 1; i++) {
                 items.putIfAbsent(i, new EmptyItem());
             }
 

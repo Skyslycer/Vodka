@@ -70,14 +70,21 @@ public class VodkaInventory {
         return new VodkaInventoryBuilder();
     }
 
-    private static class VodkaInventoryBuilder {
+    static class VodkaInventoryBuilder {
 
         private boolean closable = true;
 
         private Consumer<ClickEvent> onClick;
         private Consumer<CloseEvent> onClose;
 
-        private HashMap<Integer, Page> pages = new HashMap<>();
+        private final HashMap<Integer, Page> pages = new HashMap<>();
+
+        /**
+         * Prevent usage of the constructor.
+         */
+        private VodkaInventoryBuilder() {
+
+        }
 
         /**
          * Set if the inventory is closable.

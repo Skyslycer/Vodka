@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "de.skyslycer"
-version = "1.0.4"
+version = "1.0.5"
 
 repositories {
     mavenCentral()

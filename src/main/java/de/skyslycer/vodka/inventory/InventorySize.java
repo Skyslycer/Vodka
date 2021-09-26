@@ -6,15 +6,13 @@ public enum InventorySize {
     TWO_ROWS(18),
     THREE_ROWS(27),
     FOUR_ROWS(36),
-    FIVE_ROWS(47),
+    FIVE_ROWS(45),
     SIX_ROWS(54);
 
-    public final int slot;
-    public final int bukkitSlot;
+    public final int slots;
 
-    InventorySize(int slot) {
-        this.slot = slot;
-        this.bukkitSlot = slot - 1;
+    InventorySize(int slots) {
+        this.slots = slots;
     }
 
 }

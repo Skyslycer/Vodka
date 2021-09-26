@@ -58,7 +58,7 @@ public class Page {
      * @return The built inventory
      */
     public Inventory build() {
-        var inventory = Bukkit.createInventory(null, size.bukkitSlot, title);
+        var inventory = Bukkit.createInventory(null, size.slots, title);
 
         items.forEach((slot, item) -> {
             if (item instanceof CustomItem customItem) {

@@ -4,6 +4,7 @@ import de.skyslycer.vodka.events.ClickEvent;
 import de.skyslycer.vodka.events.CloseEvent;
 import de.skyslycer.vodka.inventory.VodkaInventory;
 import de.skyslycer.vodka.inventory.meta.PlayerMeta;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -56,7 +57,7 @@ public class VodkaHandler implements Listener {
     /**
      * Opens the first page of the inventory. (0)
      *
-     * @param player The {@link Player} to open to player to.
+     * @param player    The {@link Player} to open to player to.
      * @param inventory The {@link VodkaInventory} to open
      * @return If the inventory got opened
      */
@@ -67,7 +68,7 @@ public class VodkaHandler implements Listener {
     /**
      * Open the next page with the currently stored {@link PlayerMeta}.
      *
-     * @param player The player to open the inventory to
+     * @param player    The player to open the inventory to
      * @param inventory The inventory to open the next page from
      * @return If the inventory got opened
      */
@@ -82,8 +83,8 @@ public class VodkaHandler implements Listener {
     /**
      * Open an inventory with the given page to the given player.
      *
-     * @param player The {@link Player} to open the inventory to
-     * @param inventory The {@link VodkaInventory} to get the page from
+     * @param player     The {@link Player} to open the inventory to
+     * @param inventory  The {@link VodkaInventory} to get the page from
      * @param pageNumber The page to get from the inventory
      * @return If the inventory got opened
      */
@@ -103,7 +104,7 @@ public class VodkaHandler implements Listener {
     /**
      * Opens the first page of the inventory. (0)
      *
-     * @param player The {@link Player} to open to player to.
+     * @param player    The {@link Player} to open to player to.
      * @param inventory The {@link VodkaInventory} to open
      * @return If the inventory got opened
      * @see VodkaHandler#openFirst(Player, VodkaInventory) The method this is referring to
@@ -127,7 +128,11 @@ public class VodkaHandler implements Listener {
             return;
         }
 
-         meta.inventory.onClick.accept(
+        if (meta.inventory.onClick == null) {
+            return;
+        }
+
+        meta.inventory.onClick.accept(
                 new ClickEvent(
                         event,
                         meta.inventory,
@@ -153,11 +158,15 @@ public class VodkaHandler implements Listener {
         }
 
         if (!meta.inventory.closable) {
-            meta.inventory.open(player, meta.page.number, plugin);
+            Bukkit.getScheduler().runTaskLater(plugin, () -> meta.inventory.open(player, meta.page.number, plugin), 2);
             return;
         }
 
         playerMapping.remove(player);
+
+        if (meta.inventory.onClose == null) {
+            return;
+        }
 
         meta.inventory.onClose.accept(
                 new CloseEvent(

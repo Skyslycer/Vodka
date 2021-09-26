@@ -16,6 +16,8 @@ jobs:
         with:
           distribution: adopt
           java-version: 16
+      - name: Give gradlew permission
+        run: chmod +x gradlew
       - name: Build with Gradle
         run: ./gradlew clean build
       - name: Test with Gradle

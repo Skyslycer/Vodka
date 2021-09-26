@@ -74,7 +74,7 @@ public class Page {
      *
      * @return The new builder
      */
-    public static PageBuilder getBuilder() {
+    public static PageBuilder newBuilder() {
         return new PageBuilder();
     }
 

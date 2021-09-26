@@ -66,7 +66,7 @@ public class VodkaInventory {
      *
      * @return The new builder
      */
-    public static VodkaInventoryBuilder getBuilder() {
+    public static VodkaInventoryBuilder newBuilder() {
         return new VodkaInventoryBuilder();
     }
 

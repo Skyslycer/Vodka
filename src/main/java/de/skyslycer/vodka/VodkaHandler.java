@@ -161,8 +161,9 @@ public class VodkaHandler implements Listener {
 
         meta.inventory.onClose.accept(
                 new CloseEvent(
-                        event,
                         meta.inventory,
+                        meta.page,
+                        event,
                         event.getInventory()
                 )
         );

@@ -78,7 +78,7 @@ public class Page {
         return new PageBuilder();
     }
 
-    static class PageBuilder {
+    public static class PageBuilder {
 
         private Component title = Component.text("Drinking Vodka with the bois");
         private int pageNumber = 0;
@@ -86,13 +86,6 @@ public class Page {
         private InventorySize size = InventorySize.SIX_ROWS;
 
         private final ItemCollection items = new ItemCollection();
-
-        /**
-         * Prevent usage of the constructor.
-         */
-        private PageBuilder() {
-
-        }
 
         /**
          * Set the title.

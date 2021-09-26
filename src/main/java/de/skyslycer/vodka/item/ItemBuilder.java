@@ -1,5 +1,6 @@
 package de.skyslycer.vodka.item;
 
+import de.skyslycer.vodka.inventory.Page;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Color;
 import org.bukkit.Material;

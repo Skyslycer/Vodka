@@ -122,24 +122,25 @@ public class VodkaHandler implements Listener {
     public void onClick(InventoryClickEvent event) {
         var player = (Player) event.getWhoClicked();
 
-        var meta = checkIfExists(player);
+        var meta = playerMapping.get(player);
 
         if (meta == null) {
             return;
         }
 
-        if (meta.inventory.onClick == null) {
-            return;
-        }
-
-        meta.inventory.onClick.accept(
+        var clickEvent =
                 new ClickEvent(
                         event,
                         meta.inventory,
                         meta.page,
                         event.getInventory()
-                )
-        );
+                );
+
+        if (meta.inventory.onClick == null) {
+            return;
+        }
+
+        meta.inventory.onClick.accept(clickEvent);
     }
 
     /**
@@ -151,18 +152,18 @@ public class VodkaHandler implements Listener {
     public void onClose(InventoryCloseEvent event) {
         var player = (Player) event.getPlayer();
 
-        var meta = checkIfExists(player);
+        var meta = playerMapping.get(player);
 
         if (meta == null) {
             return;
         }
 
+        playerMapping.remove(player);
+
         if (!meta.inventory.closable) {
             Bukkit.getScheduler().runTaskLater(plugin, () -> meta.inventory.open(player, meta.page.number, plugin), 2);
             return;
         }
-
-        playerMapping.remove(player);
 
         if (meta.inventory.onClose == null) {
             return;
@@ -176,14 +177,6 @@ public class VodkaHandler implements Listener {
                         event.getInventory()
                 )
         );
-    }
-
-    private PlayerMeta checkIfExists(Player player) {
-        if (!playerMapping.containsKey(player)) {
-            return null;
-        }
-
-        return playerMapping.get(player);
     }
 
 }

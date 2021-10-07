@@ -2,7 +2,6 @@ package de.skyslycer.vodka.inventory;
 
 import de.skyslycer.vodka.events.ClickEvent;
 import de.skyslycer.vodka.events.CloseEvent;
-import de.skyslycer.vodka.inventory.meta.PlayerMeta;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
@@ -14,6 +13,7 @@ import java.util.function.Consumer;
 public class VodkaInventory {
 
     public boolean closable;
+    public boolean bottomClickable;
 
     public Consumer<ClickEvent> onClick;
     public Consumer<CloseEvent> onClose;
@@ -28,10 +28,11 @@ public class VodkaInventory {
      * @param closable If the inventory is closable.
      * @param pages The pages of the inventory.
      */
-    public VodkaInventory(Consumer<ClickEvent> onClick, Consumer<CloseEvent> onClose, boolean closable, HashMap<Integer, Page> pages) {
+    public VodkaInventory(Consumer<ClickEvent> onClick, Consumer<CloseEvent> onClose, boolean closable, boolean bottomClickable, HashMap<Integer, Page> pages) {
         this.onClick = onClick;
         this.onClose = onClose;
         this.closable = closable;
+        this.bottomClickable = bottomClickable;
         this.pages = pages;
     }
 
@@ -73,6 +74,7 @@ public class VodkaInventory {
     public static class VodkaInventoryBuilder {
 
         private boolean closable = true;
+        private boolean bottomClickable = true;
 
         private Consumer<ClickEvent> onClick;
         private Consumer<CloseEvent> onClose;
@@ -87,6 +89,17 @@ public class VodkaInventory {
          */
         public VodkaInventoryBuilder closable(boolean closable) {
             this.closable = closable;
+            return this;
+        }
+
+        /**
+         * Set if the bottom inventory is clickable.
+         *
+         * @param bottomClickable The new boolean
+         * @return The {@link VodkaInventoryBuilder} for further interactions.
+         */
+        public VodkaInventoryBuilder bottomClickable(boolean bottomClickable) {
+            this.bottomClickable = bottomClickable;
             return this;
         }
 
@@ -145,6 +158,7 @@ public class VodkaInventory {
                     onClick,
                     onClose,
                     closable,
+                    bottomClickable,
                     pages
             );
         }

@@ -12,24 +12,18 @@ public class ClickEvent {
 
     public InventoryClickEvent bukkitEvent;
     public Player player;
+    public Inventory bukkitInventory;
     public VodkaInventory inventory;
-
+    public Page page;
     public VodkaItem clickedItem;
 
-    public ClickEvent(InventoryClickEvent event, VodkaInventory inventory, Page page, Inventory bukkitInventory) {
-        this.inventory = inventory;
+    public ClickEvent(InventoryClickEvent event, Player player, Inventory bukkitInventory, VodkaInventory inventory, Page page,  VodkaItem clickedItem) {
         this.bukkitEvent = event;
-        this.player = (Player) event.getWhoClicked();
-
-        page.getItem(bukkitEvent.getSlot()).ifPresent(item -> {
-            this.clickedItem = item;
-
-            if (item instanceof CustomItem customItem) {
-                if (!customItem.movable) {
-                    this.bukkitEvent.setCancelled(true);
-                }
-            }
-        });
+        this.player = player;
+        this.bukkitInventory = bukkitInventory;
+        this.inventory = inventory;
+        this.page = page;
+        this.clickedItem = clickedItem;
     }
 
 }

@@ -4,6 +4,8 @@ import de.skyslycer.vodka.events.ClickEvent;
 import de.skyslycer.vodka.events.CloseEvent;
 import de.skyslycer.vodka.inventory.VodkaInventory;
 import de.skyslycer.vodka.inventory.meta.PlayerMeta;
+import de.skyslycer.vodka.item.items.CustomItem;
+import de.skyslycer.vodka.item.items.VodkaItem;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -12,10 +14,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.plugin.Plugin;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * A basic handler method to handle inventory events and the inventories.
@@ -128,19 +127,22 @@ public class VodkaHandler implements Listener {
             return;
         }
 
-        var clickEvent =
-                new ClickEvent(
-                        event,
-                        meta.inventory,
-                        meta.page,
-                        event.getInventory()
-                );
+        var clickedItem = handleItemClick(event, meta);
 
         if (meta.inventory.onClick == null) {
             return;
         }
 
-        meta.inventory.onClick.accept(clickEvent);
+        meta.inventory.onClick.accept(
+                new ClickEvent(
+                        event,
+                        player,
+                        event.getInventory(),
+                        meta.inventory,
+                        meta.page,
+                        clickedItem.orElse(null)
+                )
+        );
     }
 
     /**
@@ -177,6 +179,28 @@ public class VodkaHandler implements Listener {
                         event.getInventory()
                 )
         );
+    }
+
+    private Optional<VodkaItem> handleItemClick(InventoryClickEvent event, PlayerMeta meta) {
+        if (Objects.equals(event.getClickedInventory(), event.getView().getBottomInventory())) {
+            if (!meta.inventory.bottomClickable) {
+                event.setCancelled(true);
+            }
+
+            return Optional.empty();
+        }
+
+        var clickedItem = meta.page.getItem(event.getSlot());
+
+        clickedItem.ifPresent((item) -> {
+            if (item instanceof CustomItem customItem) {
+                if (!customItem.movable) {
+                    event.setCancelled(true);
+                }
+            }
+        });
+
+        return clickedItem;
     }
 
 }

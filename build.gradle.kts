@@ -4,16 +4,15 @@ plugins {
 }
 
 group = "de.skyslycer"
-version = "1.0.11"
+version = "1.1.0"
 
 repositories {
     mavenCentral()
-
     maven("https://papermc.io/repo/repository/maven-public/")
 }
 
 dependencies {
-    compileOnly("io.papermc.paper:paper-api:1.17.1-R0.1-SNAPSHOT")
+    compileOnly("io.papermc.paper:paper-api:1.18.1-R0.1-SNAPSHOT")
 }
 
 

@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "de.skyslycer"
-version = "1.1.0"
+version = "1.1.1"
 
 repositories {
     mavenCentral()
@@ -19,6 +19,7 @@ dependencies {
 java {
     withSourcesJar()
     withJavadocJar()
+    setTargetCompatibility("17")
 }
 
 tasks.getByName<Test>("test") {
